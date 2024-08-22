@@ -2,8 +2,6 @@
 /* eslint-disable no-undef */
 import { Link } from '@tanstack/react-router';
 
-const LOGIN_URL = 'http://localhost:3000/login';
-
 export const Navbar = () => {
     return (
         <div className="w-full bg-white border-b h-8 flex items-center justify-between">
@@ -11,6 +9,7 @@ export const Navbar = () => {
                 <button
                     className="font-semibold text-base pl-4 pr-4 hover:bg-black/10 border-r h-full flex items-center"
                     onClick={() => {
+                        // @ts-ignore
                         document.querySelector('#sidebar-toggle')?.click();
                     }}
                 >
@@ -19,7 +18,7 @@ export const Navbar = () => {
                 <div className="h-full flex items-center">
                     {[
                         ['/', 'Home'],
-                        ['/sounds', 'Sounds'],
+                        // ['/sounds', 'Sounds'],
                     ].map(([path, name]) => (
                         <Link
                             key={path}

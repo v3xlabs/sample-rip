@@ -2,14 +2,17 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { SampleList } from '../../../components/SampleList';
 import { PACKS } from '../../../config';
+import { SAMPLES_BY_PACK } from '../../../config.gen';
 
 export const Route = createFileRoute('/pack/$packId/')({
     component: (parameters) => {
         console.log(parameters);
         const { packId } = Route.useParams();
         const pack = PACKS[packId];
+        // @ts-ignore
+        const samples = SAMPLES_BY_PACK[packId] as string[];
 
-        if (!pack) {
+        if (!pack || !samples) {
             return <div className="p-4">Pack not found!</div>;
         }
 
@@ -30,8 +33,7 @@ export const Route = createFileRoute('/pack/$packId/')({
                             <h1 className="text-2xl font-bold">{pack.name}</h1>
                             <p>{pack.description}</p>
                             <ul className="flex items-center gap-2 text-sm">
-                                <li>22 Samples</li>
-                                <li>2 Loops</li>
+                                <li>{samples.length} Samples</li>
                             </ul>
                         </div>
                         <div>
