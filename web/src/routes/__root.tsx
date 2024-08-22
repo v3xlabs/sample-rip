@@ -5,11 +5,13 @@ import { PackSidebar } from '../components/PackSidebar';
 
 export const Route = createRootRoute({
     component: () => (
-        <div className="w-full h-screen flex flex-col">
+        <div className="w-full h-screen flex flex-col overflow-y-hidden">
             <Navbar />
-            <div className="grow h-full overflow-y-auto flex">
+            <div className="flex-1 h-full flex">
                 <PackSidebar />
-                <Outlet />
+                <div className="w-full overflow-y-auto">
+                    <Outlet />
+                </div>
             </div>
             {/* <TanStackRouterDevtools /> */}
         </div>

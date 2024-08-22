@@ -14,7 +14,7 @@ export const Route = createFileRoute('/pack/$packId/')({
         }
 
         return (
-            <div className="p-4 space-y-4 w-full">
+            <div className="p-4 space-y-4 w-full pb-16">
                 <div className="flex items-center gap-4">
                     {pack.cover && (
                         <div className="w-48 h-48 bg-neutral-100 rounded-md">
