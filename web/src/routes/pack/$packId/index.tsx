@@ -37,7 +37,15 @@ export const Route = createFileRoute('/pack/$packId/')({
                             </ul>
                         </div>
                         <div>
-                            <button className="btn">Download All</button>
+                            <button
+                                className="btn"
+                                onClick={() => {
+                                    // eslint-disable-next-line no-undef
+                                    alert('Not implemented yet!');
+                                }}
+                            >
+                                Download All
+                            </button>
                         </div>
                     </div>
                 </div>
