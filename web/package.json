@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build"
+    "build": "pnpm prebuild && vite build",
+    "prebuild": "tsx ./src/preprocess.ts"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,8 @@
     "react-leaflet": "^4.2.1",
     "swr": "^2.2.5",
     "tailwindcss": "^3.4.3",
+    "tsc": "^2.0.4",
+    "tsx": "^4.17.0",
     "ua-parser-js": "^1.0.38",
     "vite": "^5.2.10",
     "zustand": "^4.5.4"

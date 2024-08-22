@@ -39,7 +39,7 @@ export const Route = createFileRoute('/pack/$packId/')({
                         </div>
                     </div>
                 </div>
-                <SampleList />
+                <SampleList pack={packId} />
             </div>
         );
     },

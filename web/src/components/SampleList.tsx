@@ -1,27 +1,23 @@
-import { FaPlay } from 'react-icons/fa';
+import { FC } from 'react';
 
-export const SampleList = () => {
+import { SAMPLES_BY_PACK } from '../config.gen';
+import { SampleTray } from './SampleTray';
+
+export const SampleList: FC<{ pack: string }> = ({ pack }) => {
+    // @ts-ignore
+    const samples = SAMPLES_BY_PACK[pack] as string[];
+
+    if (!samples) {
+        return <>No samples sound for {pack}</>;
+    }
+
     return (
         <div className="w-full rounded-lg bg-neutral-100 p-2">
             <h2 className="px-2 text-md font-bold pt-1">Samples</h2>
             <ul>
-                {Array.from({ length: 10 })
-                    .fill(0)
-                    .map((_, index) => (
-                        <li
-                            key={index}
-                            className="flex items-center gap-2 p-2 border-b border-neutral-200 hover:bg-neutral-300/10"
-                        >
-                            <div className="w-10 h-10 rounded-sm bg-neutral-200 flex items-center justify-center text-neutral-500">
-                                <FaPlay />
-                            </div>
-                            <div>
-                                <h3 className="text-base">
-                                    Sample {index + 1}
-                                </h3>
-                            </div>
-                        </li>
-                    ))}
+                {samples?.map((sample, index) => (
+                    <SampleTray key={index} sample={sample} />
+                ))}
             </ul>
         </div>
     );
