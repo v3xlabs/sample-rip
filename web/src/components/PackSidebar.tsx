@@ -9,14 +9,14 @@ export const PackSidebar = () => {
                 {Object.entries(PACKS).map(([packId, pack]) => (
                     <li key={packId} className="">
                         <Link
-                            href={'/pack/$packId'}
+                            to={'/pack/$packId'}
                             params={{ packId }}
                             className="flex items-center gap-2 border-b border-neutral-200 px-4 py-2 hover:bg-neutral-100"
                         >
                             {pack.cover && (
                                 <img
                                     src={pack.cover}
-                                    className="w-10 h-10 rounded-sm"
+                                    className="w-10 h-10 rounded-sm "
                                     alt={pack.name}
                                 />
                             )}
