@@ -16,7 +16,7 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
             <h2 className="px-2 text-md font-bold pt-1">Samples</h2>
             <ul>
                 {samples?.map((sample, index) => (
-                    <SampleTray key={index} sample={sample} />
+                    <SampleTray key={index} sampleId={sample} packId={pack} />
                 ))}
             </ul>
         </div>
