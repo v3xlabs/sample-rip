@@ -8,9 +8,14 @@ export const Navbar = () => {
     return (
         <div className="w-full bg-white border-b h-8 flex items-center justify-between">
             <div className="h-full flex space-x-2">
-                <div className="font-semibold text-base pl-4 pr-4 hover:bg-black/10 border-r h-full flex items-center">
+                <button
+                    className="font-semibold text-base pl-4 pr-4 hover:bg-black/10 border-r h-full flex items-center"
+                    onClick={() => {
+                        document.querySelector('#sidebar-toggle')?.click();
+                    }}
+                >
                     sample.rip
-                </div>
+                </button>
                 <div className="h-full flex items-center">
                     {[
                         ['/', 'Home'],
