@@ -37,7 +37,7 @@ jobs:
         uses: v3xlabs/edgeserver-upload@v0.2.0-pre.14
         with:
           site_id: s_fec5326acb
-          server: https://edgeserver.dev/api
-          token: ${{ secrets.EDGE_TOKEN }}
           directory: web/dist
           context: true
+          server: https://edgeserver.dev/api
+          token: ${{ secrets.EDGE_TOKEN }}
