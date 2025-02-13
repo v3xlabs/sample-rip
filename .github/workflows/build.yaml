@@ -34,7 +34,7 @@ jobs:
           directory: web/dist
 
       - name: Edgeserver v0.2 Upload
-        uses: v3xlabs/edgeserver-upload@v0.2.0-pre.9
+        uses: v3xlabs/edgeserver-upload@v0.2.0-pre.10
         with:
           site_id: s_fec5326acb
           server: https://edgeserver.dev/api
