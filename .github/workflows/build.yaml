@@ -26,9 +26,18 @@ jobs:
         run: NODE_ENV=production pnpm run build
 
       - name: Edgeserver Upload 
-        uses: lvkdotsh/edgeserver-action@v0.1.2-pre.4
+        uses: v3xlabs/edgeserver-upload@v0.1.2-pre.4
         with:
           app_id: "289766393082388979"
           server: https://api.edgeserver.io
           token: ${{ secrets.SIGNAL_TOKEN }}
           directory: web/dist
+
+      - name: Edgeserver v0.2 Upload
+        uses: v3xlabs/edgeserver-upload@v0.2.0-pre.8
+        with:
+          site_id: s_fec5326acb
+          server: https://edgeserver.dev/api
+          token: ${{ secrets.EDGE_TOKEN }}
+          directory: web/dist
+          context: true
