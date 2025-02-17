@@ -41,3 +41,4 @@ jobs:
           context: true
           server: https://edgeserver.dev/api
           token: ${{ secrets.EDGE_TOKEN }}
+
