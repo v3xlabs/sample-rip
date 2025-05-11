@@ -10,7 +10,7 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
     sampleId,
 }) => {
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const { currentPackId, currentSampleId, isPlaying, playPause } = useAudioPlayer();
+    const { currentPackId, currentSampleId, isPlaying, playPause, currentTime, duration } = useAudioPlayer();
     const isCurrent = currentPackId === packId && currentSampleId === sampleId && isPlaying;
     const handlePlayPause = () => {
         if (audioRef.current) {
@@ -18,6 +18,10 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
         }
     };
 
+    // compute waveform progress for this sample
+    const progress = currentPackId === packId && currentSampleId === sampleId && duration > 0
+        ? currentTime / duration
+        : 0;
     // Load waveform data from JSON
     const [waveform, setWaveform] = useState<number[]>([]);
     useEffect(() => {
@@ -39,7 +43,6 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             </button>
             <div className="flex-1">
                 <h3 className="text-base">{sampleId}</h3>
-                <Waveform data={waveform} />
             </div>
             <audio
                 ref={audioRef}
@@ -48,7 +51,8 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
                 className="sr-only"
                 aria-hidden="true"
             />
-            <div>
+            <div className="flex items-center gap-2">
+                <Waveform data={waveform} progress={progress} />
                 <a
                     href={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
                     target="_blank"
