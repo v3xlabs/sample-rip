@@ -31,7 +31,8 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             <audio
                 ref={audioRef}
                 src={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
-                controls
+                className="sr-only"
+                aria-hidden="true"
             />
             <div>
                 <a
