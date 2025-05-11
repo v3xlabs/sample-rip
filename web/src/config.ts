@@ -18,7 +18,7 @@ export const PACKS: Record<string, Pack> = {
     ah: {
         name: 'Albert Heijn',
         description: 'Albert Heijn Bits n Bobs',
-        cover: '/pack_ah.png',
+        cover: '/pack_albert_heijn.png',
     },
     bop_it: {
         name: 'Bop It',
