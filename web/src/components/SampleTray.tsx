@@ -12,28 +12,26 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const { currentPackId, currentSampleId, isPlaying, playPause, currentTime, duration } = useAudioPlayer();
     const isCurrent = currentPackId === packId && currentSampleId === sampleId && isPlaying;
-    // compute waveform progress for this sample
-    const progress = isCurrent && duration > 0 ? currentTime / duration : 0;
     const handlePlayPause = () => {
         if (audioRef.current) {
             playPause(packId, sampleId, audioRef.current);
         }
     };
 
-    // Load waveform only when this sample is active
+    // compute waveform progress for this sample
+    const progress = currentPackId === packId && currentSampleId === sampleId && duration > 0
+        ? currentTime / duration
+        : 0;
+    // Load waveform data from JSON
     const [waveform, setWaveform] = useState<number[]>([]);
     useEffect(() => {
-        if (!isCurrent) {
-            setWaveform([]);
-            return;
-        }
         let cancelled = false;
         fetch(`/waveforms/${packId}/${sampleId}.json`)
             .then((res) => res.json())
             .then((data: number[]) => { if (!cancelled) setWaveform(data); })
             .catch(() => {});
         return () => { cancelled = true; };
-    }, [isCurrent, packId, sampleId]);
+    }, [packId, sampleId]);
 
     return (
         <li className="flex flex-wrap items-center gap-2 p-2 border-b border-neutral-200 hover:bg-neutral-300/10">
@@ -45,16 +43,16 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             </button>
             <div className="flex-1">
                 <h3 className="text-base">{sampleId}</h3>
-                <Waveform data={waveform} progress={progress} />
             </div>
             <audio
                 ref={audioRef}
                 src={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
-                preload="metadata"
+                preload="none"
                 className="sr-only"
                 aria-hidden="true"
             />
             <div className="flex items-center gap-2">
+                <Waveform data={waveform} progress={progress} />
                 <a
                     href={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
                     target="_blank"

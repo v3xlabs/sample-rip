@@ -40,6 +40,7 @@ const AudioPlayerOverlay: FC = () => {
                     <span className="font-semibold">{pack.name}</span>
                     <span className="text-xs">{formatTime(currentTime)} / {formatTime(duration)}</span>
                 </div>
+                <div className="text-sm text-neutral-600">{currentSampleId}</div>
                 <input
                     type="range"
                     min={0}

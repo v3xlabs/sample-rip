@@ -23,7 +23,7 @@ export const PACKS: Record<string, Pack> = {
     bop_it: {
         name: 'Bop It',
         description: 'Bop It Samples',
-        cover: '/pack_bop_it.png',
+        cover: '/pack_bop_it_.png',
     },
     inside_job: {
         name: 'Inside Job',
@@ -33,6 +33,6 @@ export const PACKS: Record<string, Pack> = {
     rust: {
         name: 'Rust',
         description: 'Rust Samples',
-        cover: '/pack_rust.png',
+        cover: '/pack_rust_.png',
     },
 };
