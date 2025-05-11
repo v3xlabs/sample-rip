@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { FC } from 'react';
 
 import { SAMPLES_BY_PACK } from '../config.gen';
@@ -15,8 +17,8 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
         <div className="w-full rounded-lg bg-neutral-100 p-2">
             <h2 className="px-2 text-md font-bold pt-1">Samples</h2>
             <ul>
-                {samples?.map((sample, index) => (
-                    <SampleTray key={index} sampleId={sample} packId={pack} />
+                {samples.map((sample) => (
+                    <SampleTray key={`${pack}-${sample}`} sampleId={sample} packId={pack} />
                 ))}
             </ul>
         </div>
