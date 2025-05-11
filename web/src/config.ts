@@ -15,4 +15,24 @@ export const PACKS: Record<string, Pack> = {
         description: 'Manderscheid 2024 Samples',
         cover: '/pack_duitsland.png',
     },
+    ah: {
+        name: 'Albert Heijn',
+        description: 'Albert Heijn Bits n Bobs',
+        cover: '/pack_ah.png',
+    },
+    bop_it: {
+        name: 'Bop It',
+        description: 'Bop It Samples',
+        cover: '/pack_bop_it.png',
+    },
+    inside_job: {
+        name: 'Inside Job',
+        description: 'Inside Job Samples',
+        cover: '/pack_inside_job.png',
+    },
+    rust: {
+        name: 'Rust',
+        description: 'Rust Samples',
+        cover: '/pack_rust.png',
+    },
 };
