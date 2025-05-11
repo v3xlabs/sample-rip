@@ -1,11 +1,23 @@
 // @ts-nocheck
+import classNames from 'classnames';
 import React, { FC } from 'react';
-import { useAudioPlayer } from '../context/AudioPlayerContext';
+import { FaPause, FaPlay, FaVolumeUp } from 'react-icons/fa';
+
 import { PACKS } from '../config';
-import { FaPlay, FaPause, FaVolumeUp } from 'react-icons/fa';
+import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 const AudioPlayerOverlay: FC = () => {
-    const { currentPackId, currentSampleId, isPlaying, playPause, duration, currentTime, seek, setVolume, volume } = useAudioPlayer();
+    const {
+        currentPackId,
+        currentSampleId,
+        isPlaying,
+        playPause,
+        duration,
+        currentTime,
+        seek,
+        setVolume,
+        volume,
+    } = useAudioPlayer();
 
     if (!currentPackId || !currentSampleId) return null;
 
@@ -13,41 +25,64 @@ const AudioPlayerOverlay: FC = () => {
 
     const formatTime = (sec: number) => {
         const minutes = Math.floor(sec / 60);
-        const seconds = Math.floor(sec % 60).toString().padStart(2, '0');
+        const seconds = Math.floor(sec % 60)
+            .toString()
+            .padStart(2, '0');
+
         return `${minutes}:${seconds}`;
     };
 
     const handleToggle = () => {
-        const audioEl = document.querySelector<HTMLAudioElement>(
+        const audioElement = document.querySelector<HTMLAudioElement>(
             `audio[src*="/samples/${currentPackId}/${currentSampleId}"]`
         );
-        if (audioEl) {
-            playPause(currentPackId, currentSampleId, audioEl);
+
+        if (audioElement) {
+            playPause(currentPackId, currentSampleId, audioElement);
         }
     };
 
     return (
         <div className="hidden lg:flex fixed bottom-0 left-0 right-0 bg-white border-t p-4 items-center gap-4">
             {pack.cover && (
-                <img
-                    src={pack.cover}
-                    alt={pack.name}
-                    className="w-16 h-16 object-cover rounded"
-                />
+                <button onClick={handleToggle} className="relative">
+                    <img
+                        src={pack.cover}
+                        alt={pack.name}
+                        className="w-16 h-16 object-cover rounded"
+                    />
+                    <div
+                        className={classNames(
+                            'absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black/10',
+                            {
+                                'opacity-0': isPlaying,
+                            }
+                        )}
+                    >
+                        {isPlaying ? <FaPause /> : <FaPlay />}
+                    </div>
+                </button>
             )}
             <div className="flex-1 flex flex-col space-y-1">
                 <div className="flex justify-between items-center text-sm">
-                    <span className="font-semibold">{pack.name}</span>
-                    <span className="text-xs">{formatTime(currentTime)} / {formatTime(duration)}</span>
+                    <div className="flex flex-col">
+                        <div className="font-semibold">{currentSampleId}</div>
+                        <span className="text-sm text-neutral-600">
+                            {pack.name}
+                        </span>
+                    </div>
+
+                    <span className="text-xs">
+                        {formatTime(currentTime)} / {formatTime(duration)}
+                    </span>
                 </div>
-                <div className="text-sm text-neutral-600">{currentSampleId}</div>
                 <input
                     type="range"
                     min={0}
                     max={duration}
                     step={0.01}
                     value={currentTime}
-                    onChange={e => seek(e.target.valueAsNumber)}
+                    onChange={(e) => seek(e.target.valueAsNumber)}
                     className="w-full"
                 />
             </div>
@@ -65,7 +100,7 @@ const AudioPlayerOverlay: FC = () => {
                     max={1}
                     step={0.01}
                     value={volume}
-                    onChange={e => setVolume(e.target.valueAsNumber)}
+                    onChange={(e) => setVolume(e.target.valueAsNumber)}
                     className="w-24"
                 />
             </div>
@@ -74,4 +109,3 @@ const AudioPlayerOverlay: FC = () => {
 };
 
 export default AudioPlayerOverlay;
- 

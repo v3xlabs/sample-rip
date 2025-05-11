@@ -16,11 +16,25 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
     return (
         <div className="w-full rounded-lg bg-neutral-100 p-2">
             <h2 className="px-2 text-md font-bold pt-1">Samples</h2>
-            <ul>
-                {samples.map((sample) => (
-                    <SampleTray key={`${pack}-${sample}`} sampleId={sample} packId={pack} />
-                ))}
-            </ul>
+            <table className="min-w-full">
+                <thead>
+                    <tr>
+                        <th className="px-2 text-left">Play</th>
+                        <th className="px-2 text-left">Title</th>
+                        <th className="px-2 text-left">Waveform</th>
+                        <th className="px-2 text-left">Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {samples.map((sample) => (
+                        <SampleTray
+                            key={`${pack}-${sample}`}
+                            sampleId={sample}
+                            packId={pack}
+                        />
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

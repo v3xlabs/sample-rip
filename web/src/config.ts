@@ -28,7 +28,7 @@ export const PACKS: Record<string, Pack> = {
     inside_job: {
         name: 'Inside Job',
         description: 'Inside Job Samples',
-        cover: '/pack_inside_job.png',
+        cover: '/pack_ij.png',
     },
     rust: {
         name: 'Rust',
