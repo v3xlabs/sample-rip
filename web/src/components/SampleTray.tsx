@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 // @ts-nocheck
-import { FC, useRef } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 import { FaDownload, FaPlay, FaPause } from 'react-icons/fa';
+import Waveform from './Waveform';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
@@ -17,6 +18,17 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
         }
     };
 
+    // Load waveform data from JSON
+    const [waveform, setWaveform] = useState<number[]>([]);
+    useEffect(() => {
+        let cancelled = false;
+        fetch(`/waveforms/${packId}/${sampleId}.json`)
+            .then((res) => res.json())
+            .then((data: number[]) => { if (!cancelled) setWaveform(data); })
+            .catch(() => {});
+        return () => { cancelled = true; };
+    }, [packId, sampleId]);
+
     return (
         <li className="flex flex-wrap items-center gap-2 p-2 border-b border-neutral-200 hover:bg-neutral-300/10">
             <button
@@ -27,10 +39,12 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             </button>
             <div className="flex-1">
                 <h3 className="text-base">{sampleId}</h3>
+                <Waveform data={waveform} />
             </div>
             <audio
                 ref={audioRef}
                 src={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
+                preload="metadata"
                 className="sr-only"
                 aria-hidden="true"
             />

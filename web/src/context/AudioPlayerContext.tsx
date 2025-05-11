@@ -43,14 +43,29 @@ export const AudioPlayerProvider: FC<{ children: ReactNode }> = ({ children }) =
             }
             setIsPlaying(!isPlaying);
         } else {
+            // Pause any existing audio
             if (audioRef.current) {
                 audioRef.current.pause();
             }
+            // Start new audio element
             audioRef.current = audioEl;
-            audioRef.current.play();
-            audioRef.current.volume = volume;
-            audioRef.current.addEventListener('loadedmetadata', () => setDuration(audioRef.current!.duration));
-            audioRef.current.addEventListener('timeupdate', () => setCurrentTime(audioRef.current!.currentTime));
+            // Reset time and duration
+            setCurrentTime(0);
+            setDuration(0);
+            // Set volume
+            audioEl.volume = volume;
+            // Listen for metadata to get duration
+            const onLoaded = () => setDuration(audioEl.duration);
+            audioEl.addEventListener('loadedmetadata', onLoaded);
+            // Listen for time updates
+            const onTime = () => setCurrentTime(audioEl.currentTime);
+            audioEl.addEventListener('timeupdate', onTime);
+            // Fallback: if metadata already loaded
+            if (!isNaN(audioEl.duration) && audioEl.duration > 0) {
+                setDuration(audioEl.duration);
+            }
+            // Play
+            audioEl.play();
             setCurrentPackId(packId);
             setCurrentSampleId(sampleId);
             setIsPlaying(true);
