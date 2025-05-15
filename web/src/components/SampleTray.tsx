@@ -82,8 +82,8 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
     }, [sampleId]);
 
     return (
-        <tr className="border-b border-neutral-200 hover:bg-neutral-300/10">
-            <td className="p-2 flex items-center gap-2">
+        <tr className="border-b border-neutral-200 hover:bg-neutral-300/10 flex flex-col md:table-row">
+            <td className="p-2 flex items-center gap-2 w-16">
                 <button
                     className="w-10 h-10 rounded-sm bg-neutral-200 flex items-center justify-center text-neutral-500"
                     onClick={handlePlayPause}
@@ -105,7 +105,7 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             >
                 <div
                     ref={titleContainerRef}
-                    className="overflow-hidden whitespace-nowrap flex-shrink"
+                    className="overflow-hidden whitespace-nowrap flex-shrink w-screen max-w-[320px]"
                 >
                     <span
                         ref={titleTextRef}
@@ -123,14 +123,14 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
                     </span>
                 </div>
             </td>
-            <td className="p-2">
+            <td className="p-2 w-full">
                 <Waveform data={waveform} progress={progress} />
             </td>
-            <td className="p-2">
+            <td className="p-2 flex justify-end">
                 <a
                     href={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
                     target="_blank"
-                    className="btn !py-2 flex"
+                    className="btn !py-2 flex w-fit"
                 >
                     <FaDownload />
                 </a>

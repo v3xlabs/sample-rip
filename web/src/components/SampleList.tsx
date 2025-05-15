@@ -17,7 +17,7 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
         <div className="w-full rounded-lg bg-neutral-100 p-2">
             <h2 className="px-2 text-md font-bold pt-1">Samples</h2>
             <table className="min-w-full">
-                <thead>
+                <thead className="hidden md:table-header-group">
                     <tr>
                         <th className="px-2 text-left">Play</th>
                         <th className="px-2 text-left">Title</th>
