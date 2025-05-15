@@ -60,6 +60,13 @@ export const AudioPlayerProvider: FC<{ children: ReactNode }> = ({ children }) =
             // Listen for time updates
             const onTime = () => setCurrentTime(audioEl.currentTime);
             audioEl.addEventListener('timeupdate', onTime);
+            // Listen for ended event to reset play state and time when audio finishes
+            const onEnded = () => {
+                setIsPlaying(false);
+                setCurrentTime(0);
+                audioEl.currentTime = 0;
+            };
+            audioEl.addEventListener('ended', onEnded);
             // Fallback: if metadata already loaded
             if (!isNaN(audioEl.duration) && audioEl.duration > 0) {
                 setDuration(audioEl.duration);
