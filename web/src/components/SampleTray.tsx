@@ -7,10 +7,11 @@ import { FaDownload, FaPause, FaPlay } from 'react-icons/fa';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import Waveform from './Waveform';
 
-export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
-    packId,
-    sampleId,
-}) => {
+export const SampleTray: FC<{
+    packId: string;
+    sampleId: string;
+    license: string;
+}> = ({ packId, sampleId, license }) => {
     const audioReference = useRef<HTMLAudioElement | null>(null);
     const {
         currentPackId,
@@ -126,7 +127,10 @@ export const SampleTray: FC<{ packId: string; sampleId: string }> = ({
             <td className="p-2 w-full">
                 <Waveform data={waveform} progress={progress} />
             </td>
-            <td className="p-2 flex justify-end">
+            <td className="p-2 whitespace-nowrap text-sm">
+                {license}
+            </td>
+            <td className="p-2 flex justify-end whitespace-nowrap">
                 <a
                     href={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
                     target="_blank"

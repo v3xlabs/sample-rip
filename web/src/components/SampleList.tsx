@@ -2,12 +2,14 @@
 
 import { FC } from 'react';
 
+import { PACKS } from '../config';
 import { SAMPLES_BY_PACK } from '../config.gen';
 import { SampleTray } from './SampleTray';
 
 export const SampleList: FC<{ pack: string }> = ({ pack }) => {
     // @ts-ignore
     const samples = SAMPLES_BY_PACK[pack] as string[];
+    const packInfo = PACKS[pack];
 
     if (!samples) {
         return <>No samples sound for {pack}</>;
@@ -22,6 +24,9 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
                         <th className="px-2 text-left">Play</th>
                         <th className="px-2 text-left">Title</th>
                         <th className="px-2 text-left">Waveform</th>
+                        <th className="px-2 text-left whitespace-nowrap">
+                            Can I use plz?
+                        </th>
                         <th className="px-2 text-left">Download</th>
                     </tr>
                 </thead>
@@ -31,6 +36,7 @@ export const SampleList: FC<{ pack: string }> = ({ pack }) => {
                             key={`${pack}-${sample}`}
                             sampleId={sample}
                             packId={pack}
+                            license={packInfo.license}
                         />
                     ))}
                 </tbody>
