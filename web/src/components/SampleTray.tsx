@@ -93,7 +93,7 @@ export const SampleTray: FC<{
                 </button>
                 <audio
                     ref={audioReference}
-                    src={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
+                    src={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`}
                     preload="none"
                     className="sr-only"
                     aria-hidden="true"
@@ -125,14 +125,19 @@ export const SampleTray: FC<{
                 </div>
             </td>
             <td className="p-2 w-full">
-                <Waveform data={waveform} progress={progress} />
+                <Waveform 
+                    data={waveform} 
+                    progress={progress} 
+                    packId={packId}
+                    sampleId={sampleId}
+                />
             </td>
             <td className="p-2 whitespace-nowrap text-sm">
                 {license}
             </td>
             <td className="p-2 flex justify-end whitespace-nowrap">
                 <a
-                    href={`https://github.com/v3xlabs/sample-rip/raw/master/samples/${packId}/${sampleId}`}
+                    href={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}.wav`}
                     target="_blank"
                     className="btn !py-2 flex w-fit"
                 >

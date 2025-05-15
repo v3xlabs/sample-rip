@@ -1,10 +1,20 @@
 // @ts-nocheck
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { FaPause, FaPlay, FaVolumeUp } from 'react-icons/fa';
 
 import { PACKS } from '../config';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
+import Waveform from './Waveform';
+
+const formatTime = (sec: number) => {
+    const minutes = Math.floor(sec / 60);
+    const seconds = Math.floor(sec % 60)
+        .toString()
+        .padStart(2, '0');
+
+    return `${minutes}:${seconds}`;
+};
 
 const AudioPlayerOverlay: FC = () => {
     const {
@@ -19,26 +29,61 @@ const AudioPlayerOverlay: FC = () => {
         volume,
     } = useAudioPlayer();
 
-    if (!currentPackId || !currentSampleId) return null;
+    const [waveformData, setWaveformData] = useState<number[]>([]);
+
+    // Load actual waveform data from JSON
+    useEffect(() => {
+        if (currentPackId && currentSampleId) {
+            let cancelled = false;
+
+            fetch(`/waveforms/${currentPackId}/${currentSampleId}.json`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Waveform data not available');
+                    }
+
+                    return response.json();
+                })
+                .then((data: number[]) => {
+                    if (!cancelled) setWaveformData(data);
+                })
+                .catch(() => {
+                    // Fallback to generating random data if fetch fails
+                    if (!cancelled) {
+                        const sampleCount = 100;
+                        const fallbackData = Array.from(
+                            { length: sampleCount },
+                            () => Math.random() * 0.8 + 0.2
+                        );
+
+                        setWaveformData(fallbackData);
+                    }
+                });
+
+            return () => {
+                cancelled = true;
+            };
+        }
+    }, [currentPackId, currentSampleId]);
+
+    if (!currentPackId || !currentSampleId) return <></>;
 
     const pack = PACKS[currentPackId];
 
-    const formatTime = (sec: number) => {
-        const minutes = Math.floor(sec / 60);
-        const seconds = Math.floor(sec % 60)
-            .toString()
-            .padStart(2, '0');
-
-        return `${minutes}:${seconds}`;
-    };
-
     const handleToggle = () => {
-        const audioElement = document.querySelector<HTMLAudioElement>(
+        // Using document is OK in this case as we're in a browser environment
+        const audioElement = document.querySelector(
             `audio[src*="/samples/${currentPackId}/${currentSampleId}"]`
         );
 
         if (audioElement) {
             playPause(currentPackId, currentSampleId, audioElement);
+        }
+    };
+
+    const handleSeek = (position: number) => {
+        if (duration) {
+            seek(position * duration);
         }
     };
 
@@ -64,7 +109,7 @@ const AudioPlayerOverlay: FC = () => {
                 </button>
             )}
             <div className="flex-1 flex flex-col space-y-1">
-                <div className="flex justify-between items-center text-sm">
+                <div className="flex justify-start gap-4 items-center text-sm">
                     <div className="flex flex-col">
                         <div className="font-semibold">{currentSampleId}</div>
                         <span className="text-sm text-neutral-600">
@@ -72,19 +117,33 @@ const AudioPlayerOverlay: FC = () => {
                         </span>
                     </div>
 
+                    {waveformData.length > 0 ? (
+                        <Waveform
+                            data={waveformData}
+                            progress={duration ? currentTime / duration : 0}
+                            onSeek={handleSeek}
+                            height={40}
+                            packId={currentPackId}
+                            sampleId={currentSampleId}
+                        />
+                    ) : (
+                        <input
+                            type="range"
+                            min={0}
+                            max={duration}
+                            step={0.01}
+                            value={currentTime}
+                            onChange={(event) =>
+                                seek(event.target.valueAsNumber)
+                            }
+                            className="w-full"
+                        />
+                    )}
+
                     <span className="text-xs">
                         {formatTime(currentTime)} / {formatTime(duration)}
                     </span>
                 </div>
-                <input
-                    type="range"
-                    min={0}
-                    max={duration}
-                    step={0.01}
-                    value={currentTime}
-                    onChange={(e) => seek(e.target.valueAsNumber)}
-                    className="w-full"
-                />
             </div>
             <button
                 onClick={handleToggle}
@@ -100,7 +159,7 @@ const AudioPlayerOverlay: FC = () => {
                     max={1}
                     step={0.01}
                     value={volume}
-                    onChange={(e) => setVolume(e.target.valueAsNumber)}
+                    onChange={(event) => setVolume(event.target.valueAsNumber)}
                     className="w-24"
                 />
             </div>
