@@ -137,7 +137,7 @@ export const SampleTray: FC<{
             </td>
             <td className="p-2 flex justify-end whitespace-nowrap">
                 <a
-                    href={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}.wav`}
+                    href={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`}
                     target="_blank"
                     className="btn !py-2 flex w-fit"
                 >
