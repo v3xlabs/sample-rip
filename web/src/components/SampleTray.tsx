@@ -4,6 +4,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { FaDownload, FaPause, FaPlay } from 'react-icons/fa';
 
+import { sampleUrl } from '../config';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 import Waveform from './Waveform';
 
@@ -93,7 +94,7 @@ export const SampleTray: FC<{
                 </button>
                 <audio
                     ref={audioReference}
-                    src={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`}
+                    src={sampleUrl(packId, sampleId)}
                     preload="none"
                     className="sr-only"
                     aria-hidden="true"
@@ -137,7 +138,7 @@ export const SampleTray: FC<{
             </td>
             <td className="p-2 flex justify-end whitespace-nowrap">
                 <a
-                    href={`https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`}
+                    href={sampleUrl(packId, sampleId)}
                     target="_blank"
                     className="btn !py-2 flex w-fit"
                 >

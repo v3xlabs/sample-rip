@@ -1,3 +1,12 @@
+/// <reference types="vite/client" />
+
+const SAMPLE_BASE = import.meta.env.DEV
+    ? '/samples'
+    : 'https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples';
+
+export const sampleUrl = (packId: string, sampleId: string) =>
+    `${SAMPLE_BASE}/${packId}/${sampleId}`;
+
 type Pack = {
     name: string;
     description: string;
@@ -40,6 +49,16 @@ export const PACKS: Record<string, Pack> = {
         name: 'Rust',
         description: 'Rust Samples',
         cover: '/pack_rust_.png',
+        license: 'Yes, own risk.',
+    },
+    windows: {
+        name: 'Windows',
+        description: 'Windows system sounds',
+        license: 'Yes, own risk.',
+    },
+    macos: {
+        name: 'macOS',
+        description: 'Mac system sounds',
         license: 'Yes, own risk.',
     },
 };

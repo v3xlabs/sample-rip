@@ -1,6 +1,8 @@
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 
+import { sampleUrl } from '../config';
+
 export const slugify = (text: string) => {
   return text.toLowerCase().replace(/ /g, '_');
 };
@@ -33,7 +35,7 @@ export const downloadPackSamples = async (
     // Fetch and add each file to the zip
     for (let i = 0; i < sampleIds.length; i++) {
       const sampleId = sampleIds[i];
-      const url = `https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`;
+      const url = sampleUrl(packId, sampleId);
 
       // Fetch the file
       const response = await fetch(url);

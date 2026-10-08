@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { FC, useEffect, useRef } from 'react';
+import { sampleUrl } from '../config';
 import { useAudioPlayer } from '../context/AudioPlayerContext';
 
 interface WaveformProperties {
@@ -31,7 +32,7 @@ const Waveform: FC<WaveformProperties> = ({
         if (packId && sampleId && !audioRef.current) {
             // Create a new audio element
             audioRef.current = new Audio();
-            audioRef.current.src = `https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`;
+            audioRef.current.src = sampleUrl(packId, sampleId);
             audioRef.current.preload = 'metadata';
         }
     }, [packId, sampleId]);
@@ -70,7 +71,7 @@ const Waveform: FC<WaveformProperties> = ({
         // If we still don't have an audio element, create a new one
         if (!audioElement) {
             audioElement = new Audio();
-            audioElement.src = `https://raw.githubusercontent.com/v3xlabs/sample-rip/refs/heads/master/samples/${packId}/${sampleId}`;
+            audioElement.src = sampleUrl(packId, sampleId);
             audioElement.preload = 'metadata';
             audioRef.current = audioElement;
         }
